@@ -30,7 +30,6 @@ function CalendarTable(){
 
     var year = today.getFullYear();
     var month = today.getMonth();
-    console.log(month);
     var startDayOfWeek = new Date(year, month, 1).getDay();
     var monthOfEndDay = new Date(year, month + 1, 0).getDate();
     var countDay = 0;
@@ -62,7 +61,7 @@ function CalendarTable(){
                 countjoin++;
             }else if(t < 5){
                 const tbody_td = document.createElement("th");
-                const textday = document.createTextNode("");
+                const textday = document.createTextNode("　");
                 tbody_td.appendChild(textday);
                 tbody_tr.appendChild(tbody_td);
             }
