@@ -58,6 +58,7 @@ function CalendarTable(){
                 for(let d = 0; d < 7; d++){
                     var joinday = x.cells[d];
                     joinday.firstChild.nodeValue = x.cells[d].textContent + "/" + countDay;
+                    
                 }
 
                 
