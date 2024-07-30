@@ -30,9 +30,11 @@ function CalendarTable(){
 
     var year = today.getFullYear();
     var month = today.getMonth();
+    console.log(month);
     var startDayOfWeek = new Date(year, month, 1).getDay();
     var monthOfEndDay = new Date(year, month + 1, 0).getDate();
     var countDay = 0;
+    var countjoin = 0;
 
     const tbody = document.createElement("tbody");
     tbody.id = "calendartbody";
@@ -55,14 +57,9 @@ function CalendarTable(){
                 countDay++;
                 var joinweek = document.getElementById("calendartbody");  
                 var x = joinweek.rows[4];
-                for(let d = 0; d < 7; d++){
-                    var joinday = x.cells[d];
-                    joinday.firstChild.nodeValue = x.cells[d].textContent + "/" + countDay;
-                    
-                }
-
-                
-                
+                var joinday = x.cells[countjoin];
+                joinday.firstChild.nodeValue = x.cells[countjoin].textContent + "/" + countDay;
+                countjoin++;
             }else if(t < 5){
                 const tbody_td = document.createElement("th");
                 const textday = document.createTextNode("");
