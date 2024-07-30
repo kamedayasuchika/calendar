@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カレンダー</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="all_area">
+        <p id="Header_year_month"></p>
+        <button id="last_year_btn" onclick="last_year()"><<</button>
+        <button id="last_month_btn" onclick="last_month()"><</button>
+        <button id="reset_btn" onclick="reset_year_month()">●</button>
+        <button id="next_year_btn" onclick="next_month()">></button>
+        <button id="next_year_btn" onclick="next_year()">>></button>
+    </div>
+    <div id="calendar"></div>
+    <script src="script.js"></script>
+</body>
+</html>
