@@ -1,6 +1,8 @@
+//今日の日付
 let today = new Date();
 
 const week = ["日","月","火","水","木","金","土"];
+const endOfWeek = 5;
 
 window.onload = function(){
     Calendarheader(today);
@@ -40,31 +42,33 @@ function CalendarTable(){
     for(let t = 0; t < 6; t++){
         const tbody_tr = document.createElement("tr");
         for(let j = 0; j < week.length; j++){
+            //重複しているtdを書く
             if(t == 0 && startDayOfWeek == j){
-                const tbody_th = document.createElement("th");
+                const tbody_td = document.createElement("td");
                 countDay++;
                 const textday = document.createTextNode(countDay);
-                tbody_th.appendChild(textday);
-                tbody_tr.appendChild(tbody_th);
-            }else if(countDay != 0 && countDay < monthOfEndDay && t < 5){
-                const tbody_th = document.createElement("th");
+                tbody_td.appendChild(textday);
+                tbody_tr.appendChild(tbody_td);
+            }else if(countDay != 0 && countDay < monthOfEndDay && t < endOfWeek){
+                const tbody_td = document.createElement("td");
                 countDay++;
                 const textday = document.createTextNode(countDay);
-                tbody_th.appendChild(textday);
-                tbody_tr.appendChild(tbody_th);
-            }else if(t == 5 && countDay < monthOfEndDay){
+                tbody_td.appendChild(textday);
+                tbody_tr.appendChild(tbody_td);
+            }else if(t == endOfWeek && countDay < monthOfEndDay){
                 countDay++;
                 var joinweek = document.getElementById("calendartbody");  
                 var x = joinweek.rows[4];
                 var joinday = x.cells[countjoin];
                 joinday.firstChild.nodeValue = x.cells[countjoin].textContent + "/" + countDay;
                 countjoin++;
-            }else if(t < 5){
-                const tbody_td = document.createElement("th");
+            }else if(t < endOfWeek){ 
+                const tbody_td = document.createElement("td");
                 const textday = document.createTextNode("　");
                 tbody_td.appendChild(textday);
                 tbody_tr.appendChild(tbody_td);
             }
+            //重複しているappendChildを書く
             tbody.appendChild(tbody_tr);
         }
         table.appendChild(tbody);
@@ -100,7 +104,7 @@ function last_month(){
 }
 
 function next_month(){
-    today.setMonth(today.getMonth() + 1);
+    today.setMonth(today.getMonth() + 1,1);
     removeCalendar();
     Calendarheader(today);
 }

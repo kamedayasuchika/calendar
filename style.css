@@ -3,7 +3,6 @@
 }
 
 table{
-    border: solid black 1px;
     min-width: 600px;
     height: 350px;
     margin: 20px auto 0;
@@ -11,16 +10,20 @@ table{
     table-layout: fixed;
 }
 
-
-th{
+th,td{
     border: 1px solid;
     width:calc(100% / 7)
 }
 
-tr th:first-child{
+td{
+    text-align: center;
+}
+
+tr th:first-child,td:first-child{
     color: red;
 }
 
-tr th:last-child{
+
+tr th:last-child,td:last-child{
     color: blue;
 }
