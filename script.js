@@ -44,17 +44,17 @@ function CalendarTable(){
         const tbody_tr = document.createElement("tr");
         for(let j = 0; j < week.length; j++){
             if(t == 0 && startDayOfWeek == j){
-                const tbody_th = document.createElement("th");
+                const tbody_td = document.createElement("td");
                 countDay++;
                 const textday = document.createTextNode(countDay);
-                tbody_th.appendChild(textday);
-                tbody_tr.appendChild(tbody_th);
+                tbody_td.appendChild(textday);
+                tbody_tr.appendChild(tbody_td);
             }else if(countDay != 0 && countDay < monthOfEndDay && t < 5){
-                const tbody_th = document.createElement("th");
+                const tbody_td = document.createElement("td");
                 countDay++;
                 const textday = document.createTextNode(countDay);
-                tbody_th.appendChild(textday);
-                tbody_tr.appendChild(tbody_th);
+                tbody_td.appendChild(textday);
+                tbody_tr.appendChild(tbody_td);
             }else if(t == 5 && countDay < monthOfEndDay){
                 countDay++;
                 var joinweek = document.getElementById("calendartbody");  
@@ -63,7 +63,7 @@ function CalendarTable(){
                 joinday.firstChild.nodeValue = x.cells[countjoin].textContent + "/" + countDay;
                 countjoin++;
             }else if(t < 5){
-                const tbody_td = document.createElement("th");
+                const tbody_td = document.createElement("td");
                 const textday = document.createTextNode("");
                 tbody_td.appendChild(textday);
                 tbody_tr.appendChild(tbody_td);
