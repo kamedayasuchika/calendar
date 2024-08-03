@@ -2,6 +2,24 @@
     text-align: center;
 }
 
+#Header_year_month{
+    font-weight: bold;
+    font-size: larger;
+}
+
+/* #last_year_btn,
+#last_month_btn,
+#reset_btn,
+#next_year_btn,
+#next_month_btn{
+    size: 100;
+} */
+
+button{
+    width: 3em;
+    height: 2em;
+}
+
 table{
     min-width: 600px;
     height: 350px;
@@ -11,7 +29,7 @@ table{
 }
 
 th,td{
-    border: 1px solid;
+    border: 1px solid black;
     width:calc(100% / 7)
 }
 
@@ -21,9 +39,15 @@ td{
 
 tr th:first-child,td:first-child{
     color: red;
+    background-color: rgb(250, 203, 203)
 }
 
 
 tr th:last-child,td:last-child{
     color: blue;
+    background-color: aliceblue;
+}
+
+.no_data{
+    background-color: rgb(228, 227, 227);
 }
