@@ -9,6 +9,8 @@ window.onload = function(){
     Calendarheader(today);
     CalendarTable();
 }
+    
+
 
 //カレンダーの～年～月の部分を作成
 function Calendarheader(today){
@@ -54,8 +56,9 @@ function CalendarTable(){
         const tbody_tr = document.createElement("tr");
         for(let j = 0; j < week.length; j++){
             const tbody_td = document.createElement("td");
+            tbody_td.classList.add("in_data");
             if((t == 0 && j < startDayOfWeek) || (t == 4  && countDay == monthOfEndDay)){ //月初前、月末後に空白の枠作成
-                tbody_td.classList.add("no_data");
+                tbody_td.classList.replace("in_data","no_data");
                 textday = document.createTextNode("　");
             }else if(t == 0 && startDayOfWeek == j){  //1週目の作成
                 countDay++;
@@ -82,7 +85,45 @@ function CalendarTable(){
         const calender = document.getElementById("calendar");
         calender.appendChild(table); 
     }
+    var allTd = document.querySelectorAll(".in_data");
+    addclick(allTd);
 }
+
+function addclick(allTd){
+    const div = document.getElementById("text_area");
+    for(var td of allTd){
+        td.addEventListener('click',function(){
+            removetext();
+            
+            const button_save = document.createElement("input");
+            button_save.id = "save_data";
+            button_save.type = "button";
+            button_save.value = "予定の作成";
+            div.appendChild(button_save);
+            save(button_save);
+           
+            const button_remove = document.createElement("input");
+            button_remove.type = "button";
+            button_remove.value = "削除";
+            div.appendChild(button_remove);
+        },false); 
+    }  
+}
+
+function save(button_save){
+    button_save.addEventListener("click",function(){
+    window.open("plan.html");
+})
+}
+ 
+
+function removetext(){
+    const div = document.getElementById("text_area");
+    while(div.firstChild){
+        div.removeChild(div.firstChild);
+    }
+}
+
 
 //年、月のボタンが押されるたびに表示されているカレンダーを削除し、変更後の年、月で再度カレンダーを作成
 function removeCalendar(){
