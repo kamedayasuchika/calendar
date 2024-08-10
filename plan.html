@@ -7,9 +7,12 @@
 </head>
 <body>
     <div>
-        <label>予定：　<input type="text"></label><br>
-        <label>場所：　<input type="text"></label><br>
+        <label>予定：　<input type="text" id="plan"></label><br>
+        <label>場所：　<input type="text" id="place"></label><br>
         時間：　<select id="time_h" onclick="create_h()"></select>時　<select id="time_s" onclick="create_s()"></select>分
+    </div>
+    <div>
+        <button id="submit_button" onclick="submit()">登録</button>
     </div>
     <script src="plan.js"></script>
 </body>

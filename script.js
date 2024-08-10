@@ -4,10 +4,16 @@ let today = new Date();
 //曜日
 const week = ["日","月","火","水","木","金","土"];
 
+var plan;
+var place;
+var time_h;
+var time_s;
+
 //画面が読み込まれた際に、カレンダーを表示
 window.onload = function(){
     Calendarheader(today);
     CalendarTable();
+    save();
 }
     
 
@@ -95,27 +101,65 @@ function addclick(allTd){
         td.addEventListener('click',function(){
             removetext();
             
-            const button_save = document.createElement("input");
-            button_save.id = "save_data";
-            button_save.type = "button";
-            button_save.value = "予定の作成";
-            div.appendChild(button_save);
-            save(button_save);
+            const button_create = document.createElement("input");
+            button_create.id = "button_create";
+            button_create.type = "button";
+            button_create.value = "予定の作成";
+            div.appendChild(button_create);
+            create(button_create);
            
-            const button_remove = document.createElement("input");
-            button_remove.type = "button";
-            button_remove.value = "削除";
-            div.appendChild(button_remove);
+            const button_display = document.createElement("input");
+            button_display.type = "button";
+            button_display.value = "予定の表示";
+            div.appendChild(button_display);
+            display(button_display);
         },false); 
     }  
 }
 
-function save(button_save){
-    button_save.addEventListener("click",function(){
-    window.open("plan.html");
+function create(button_create){
+    button_create.addEventListener("click",function(){
+        window.location.href = "http://127.0.0.1:5500/plan.html";
 })
 }
- 
+
+function save(){
+        plan = localStorage.getItem("plan");
+        place = localStorage.getItem("place");
+        time_h = localStorage.getItem("time_h");
+        time_s = localStorage.getItem("time_s");
+
+        console.log(plan);
+        console.log(place);
+        console.log(time_h);
+        console.log(time_s);
+}
+
+function display(button_display){
+    button_display.addEventListener("click",function(){
+        const div = document.getElementById("text_area");
+        const Unordered_List = document.createElement("ul");
+        for(l = 0; l < 3; l++){
+            const List_item = document.createElement("li");
+            switch(l){
+                case 0:
+                    textnode = document.createTextNode(plan);
+                    break;
+
+                case 1:
+                    textnode = document.createTextNode(place);
+                    break;
+
+                case 2:
+                    textnode = document.createTextNode(time_h + ":" + time_s);
+                    break;
+                }
+            List_item.appendChild(textnode);
+            Unordered_List.appendChild(List_item);
+        }
+        div.appendChild(Unordered_List);
+    })
+}
 
 function removetext(){
     const div = document.getElementById("text_area");

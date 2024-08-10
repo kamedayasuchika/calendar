@@ -1,6 +1,8 @@
+var hour;
+var seconds;
+
 function create_h(){
     var all_h = [];
-    var hour;
     for(h = 0; h < 24; h++){
         let time_h = document.getElementById("time_h");
         if(h < 10){
@@ -18,7 +20,6 @@ function create_h(){
 
 function create_s(){
     var all_s = [];
-    var seconds;
     for(s = 0; s < 60; s++){
         let time_s = document.getElementById("time_s");
         if(s < 10){
@@ -32,4 +33,18 @@ function create_s(){
         option.text = all_s[s];
         time_s.appendChild(option); 
     }
+}
+
+function submit(){
+    let plan = document.getElementById("plan").value;
+    let place = document.getElementById("place").value;
+    let time_h = document.getElementById("time_h").value;
+    let time_s = document.getElementById("time_s").value;
+
+    localStorage.setItem("plan",plan);
+    localStorage.setItem("place",place);
+    localStorage.setItem("time_h",time_h);
+    localStorage.setItem("time_s",time_s);
+
+    window.location.href = "http://127.0.0.1:5500/index.html";
 }
