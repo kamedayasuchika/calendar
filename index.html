@@ -9,15 +9,31 @@
 <body>
     <div class="all_area">
         <p id="Header_year_month"></p>
+        <button id="button_create" onclick="createpage()">+</button>
+        <button id="add-task">*</button>
+        <button id="button_remove" onclick="button_remove()">-</button>
+        <br><br>
         <button id="last_year_btn" onclick="last_year()"><<</button>
         <button id="last_month_btn" onclick="last_month()"><</button>
         <button id="reset_btn" onclick="reset_year_month()">●</button>
         <button id="next_month_btn" onclick="next_month()">></button>
         <button id="next_year_btn" onclick="next_year()">>></button>
     <div id="calendar"></div><br>
-    <div id="text_area"></div>
 </div>
+<div>
+    <label>予定：　<input type="text" id="plan"></label><br>
+    <label>場所：　<input type="text" id="place"></label><br>
+    <label>日付：　<input type="date" id="day"></label><br>
+    時間：　<select id="time_h" onclick="create_h()"></select>時　<select id="time_s" onclick="create_s()"></select>分
+</div>
+<div>
+    <button id="submit_button" onclick="submit()">登録</button>
+</div>
+<ul id="task-list">
+    <!-- タスクがここに追加されます -->
+  </ul>
+<div id="text_area"></div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

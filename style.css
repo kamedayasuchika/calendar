@@ -12,7 +12,7 @@ button{
     height: 2em;
 }
 
-table{
+#calendartable{
     min-width: 600px;
     height: 350px;
     margin: 20px auto 0;
@@ -29,10 +29,6 @@ td{
     text-align: center;
 }
 
-/* マウスオーバー時 */
-.in_data:hover{
-    background-color: #fadfc0;
-}
 
 tr th:first-child,td:first-child{
     color: red;
@@ -49,4 +45,19 @@ tr th:last-child,td:last-child{
     background-color: rgb(228, 227, 227);
 }
 
+#plantable{
+    min-width: 600px;
+    height: 50px;
+    margin: 20px auto 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+
+
+#plantable td{
+    background-color: white;
+    color: black;
+    width:calc(100% / 4)
+}
 

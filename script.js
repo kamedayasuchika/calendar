@@ -1,27 +1,167 @@
 //今日の日付
 let today = new Date();
 
+var year;
+var month;
+
 //曜日
 const week = ["日","月","火","水","木","金","土"];
+const todo = ["予定","場所","日付","時間"];
+const displaylist = [];
 
 var plan;
 var place;
 var time_h;
 var time_s;
+var All_Data;
 
 //画面が読み込まれた際に、カレンダーを表示
 window.onload = function(){
     Calendarheader(today);
     CalendarTable();
-    save();
-}
-    
+    dayclick();
+    // display();
+     // ローカルストレージから保存されたタスクを取得し、存在しなければ空の配列を作成
+     const saveTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+     console.log(saveTasks);
+    //  All_Data = 
+    //   "予定:　" + displaylist[0] + "　" +
+    //   "場所:　" + displaylist[1] + "　" +
+    //   "日付:　" + displaylist[2] + "　" +
+    //   "時間:　" + displaylist[3];
+    // 保存された各タスクに対して処理を行う
+    saveTasks.forEach(function (taskText) {
+        // タスクを表示する関数を呼び出す
+        createTask(taskText);
+      });
+     };
 
+//  // タスクを追加するボタンがクリックされたときの処理
+//  document.getElementById("add-task").addEventListener("click", function () {
+//     // ユーザーが入力したタスクのテキストを取得
+//     const taskText = All_Data;
+//     console.log(All_Data);
+//     // 入力が空でない場合
+//     if (taskText) {
+//       // タスクを表示する関数を呼び出す
+//     //   createTask(taskText);
+//       // タスクを保存する関数を呼び出す
+//       saveTask(taskText);
+//       // 入力フィールドをクリア
+//       All_Data = "";
+//     }
+//   });
+
+// タスクを表示する関数
+function createTask(taskText) {
+    // タスクリストの要素を取得
+    const taskList = document.getElementById("task-list");
+    // 新しいタスクアイテム（li要素）を作成
+    const taskItem = document.createElement("li");
+    // タスクアイテムにテキストを設定
+    taskItem.textContent = taskText;
+  
+    // 削除ボタンを作成
+    const deleteButton = document.createElement("button");
+    // 削除ボタンのテキストを設定
+    deleteButton.textContent = "削除";
+    // 削除ボタンがクリックされたときの処理を設定
+    deleteButton.addEventListener("click", function () {
+      // タスクを削除する関数を呼び出す
+      deleteTask(taskText);
+      // タスクアイテムをタスクリストから削除
+      taskList.removeChild(taskItem);
+    });
+  
+    // 削除ボタンをタスクアイテムに追加
+    taskItem.appendChild(deleteButton);
+    // タスクアイテムをタスクリストに追加
+    taskList.appendChild(taskItem);
+  }
+ 
+  // タスクをローカルストレージに保存する関数
+  function saveTask(taskText) {
+    // ローカルストレージから保存されたタスクを取得し、存在しなければ空の配列を作成
+    const saveTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    console.log(saveTasks);
+    // 新しいタスクを保存されたタスクリストに追加
+    saveTasks.push(taskText);
+    // タスクリストをローカルストレージに保存
+    localStorage.setItem("tasks", JSON.stringify(saveTasks));
+  }
+
+    // タスクを削除する関数
+    function deleteTask(taskText) {
+        // ローカルストレージから保存されたタスクを取得し、存在しなければ空の配列を作成
+        const saveTasks = JSON.parse(localStorage.getItem("tasks"))|| [];
+        console.log(saveTasks);
+
+        // 指定されたタスクをフィルタリングして削除
+        const updatedTasks = saveTasks.filter(function (task) {
+          return task !== taskText;
+        });
+        // 更新されたタスクリストをローカルストレージに保存
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      }
+
+
+    //   function display(){
+    //     let all_data = JSON.parse(localStorage.getItem("All_Data"));
+    
+    //     var getplan = all_data.plan;
+    //     displaylist.push(getplan);
+    
+    //     var getplace = all_data.place;
+    //     displaylist.push(getplace);
+    
+    //     var getdate = all_data.day;
+    //     displaylist.push(getdate);
+    
+    //     var gettime_h = all_data.time_h;
+    //     var gettime_s = all_data.time_s;
+    //     var gettime_all = gettime_h + ":" + gettime_s;
+    //     displaylist.push(gettime_all);
+    //     console.log(displaylist);
+    //   }
+    
+        // localStorage.setItem("All_Data",JSON.stringify(all_data));
+    
+        // getdate = String(getdate).slice(0 , -3);
+    
+        // if(year_month == getdate){
+        //     const text_area = document.getElementById("text_area");
+        //     var table = document.createElement("table");
+        //     table.id = "plantable";
+        //     var tr = document.createElement("tr");
+        //     tr.id = "plantable_tr";
+        //     for(i = 0; i < todo.length; i++){
+        //         var td = document.createElement("td");
+        //         td.id = "plantable_td";
+        //         var td_text = document.createTextNode(todo[i]);
+        //         td.appendChild(td_text);
+        //         tr.appendChild(td);
+        //     }
+            
+        //     var tr1 = document.createElement("tr");
+        //     for(i = 0; i < todo.length; i++){
+        //         var td1 = document.createElement("td");
+        //         var td_text1 = document.createTextNode(displaylist[i]);
+        //         td1.appendChild(td_text1);
+        //         tr1.appendChild(td1);
+        //     }
+        //         table.appendChild(tr);
+        //         table.appendChild(tr1);
+        //         text_area.appendChild(table);
+        //     }
+        // }
 
 //カレンダーの～年～月の部分を作成
 function Calendarheader(today){
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
+    year = today.getFullYear();
+    month = today.getMonth() + 1;
+    if(month < 10){
+        month = "0" + month;
+    }
     var header = year + "年" + month + "月";
     document.getElementById("Header_year_month").textContent = header;
 }
@@ -42,8 +182,8 @@ function CalendarTable(){
     table.appendChild(thead);
 
 
-    var year = today.getFullYear();
-    var month = today.getMonth();
+    year = today.getFullYear();
+    month = today.getMonth();
     
     var startDayOfWeek = new Date(year, month, 1).getDay(); //月初の曜日を取得
     var monthOfEndDay = new Date(year, month + 1, 0).getDate(); //月末日を取得
@@ -91,75 +231,129 @@ function CalendarTable(){
         const calender = document.getElementById("calendar");
         calender.appendChild(table); 
     }
-    var allTd = document.querySelectorAll(".in_data");
-    addclick(allTd);
 }
 
-function addclick(allTd){
-    const div = document.getElementById("text_area");
-    for(var td of allTd){
-        td.addEventListener('click',function(){
-            removetext();
-            
-            const button_create = document.createElement("input");
-            button_create.id = "button_create";
-            button_create.type = "button";
-            button_create.value = "予定の作成";
-            div.appendChild(button_create);
-            create(button_create);
-           
-            const button_display = document.createElement("input");
-            button_display.type = "button";
-            button_display.value = "予定の表示";
-            div.appendChild(button_display);
-            display(button_display);
-        },false); 
-    }  
+var year_month;
+
+function dayclick(){
+    if((month + 1) < 10){
+        month = "0" + (month + 1);
+        year_month = String(year) + "-" + month; 
+        console.log(year_month);  
+    }else{
+        year_month = String(year) + "-" + (month + 1);   
+        console.log(year_month);
+    }
+    // display(year_month);
 }
 
-function create(button_create){
-    button_create.addEventListener("click",function(){
-        window.location.href = "http://127.0.0.1:5500/plan.html";
-})
+function createpage(){
+    
 }
 
-function save(){
-        plan = localStorage.getItem("plan");
-        place = localStorage.getItem("place");
-        time_h = localStorage.getItem("time_h");
-        time_s = localStorage.getItem("time_s");
+var hour;
+var seconds;
+const list = [];
+const storage = localStorage;
 
-        console.log(plan);
-        console.log(place);
-        console.log(time_h);
-        console.log(time_s);
-}
 
-function display(button_display){
-    button_display.addEventListener("click",function(){
-        const div = document.getElementById("text_area");
-        const Unordered_List = document.createElement("ul");
-        for(l = 0; l < 3; l++){
-            const List_item = document.createElement("li");
-            switch(l){
-                case 0:
-                    textnode = document.createTextNode(plan);
-                    break;
-
-                case 1:
-                    textnode = document.createTextNode(place);
-                    break;
-
-                case 2:
-                    textnode = document.createTextNode(time_h + ":" + time_s);
-                    break;
-                }
-            List_item.appendChild(textnode);
-            Unordered_List.appendChild(List_item);
+function create_h(){
+    var all_h = [];
+    for(h = 0; h < 24; h++){
+        let time_h = document.getElementById("time_h");
+        if(h < 10){
+            hour = "0" + h;
+            all_h.push(hour);
+        }else{
+            hour = String(h);
+            all_h.push(hour);
         }
-        div.appendChild(Unordered_List);
-    })
+        let option = document.createElement("option");
+        option.text = all_h[h];
+        time_h.appendChild(option); 
+    }
 }
+
+function create_s(){
+    var all_s = [];
+    for(s = 0; s < 60; s++){
+        let time_s = document.getElementById("time_s");
+        if(s < 10){
+            seconds = "0" + s;
+            all_s.push(seconds);
+        }else{
+            seconds = String(s);
+            all_s.push(seconds);
+        }
+        let option = document.createElement("option");
+        option.text = all_s[s];
+        time_s.appendChild(option); 
+    }
+}
+
+function submit(){
+    let plan = document.getElementById("plan").value;
+    let place = document.getElementById("place").value;
+    let day = document.getElementById("day").value;
+    let time_h = document.getElementById("time_h").value;
+    let time_s = document.getElementById("time_s").value;
+    var taskText =  
+      "予定:　" + plan + "　" +
+      "場所:　" + place + "　" +
+      "日付:　" + day + "　" +
+      "時間:　" + time_h + ":" + time_s;
+
+    if(taskText) {
+        // タスクを表示する関数を呼び出す
+        createTask(taskText);
+        // タスクを保存する関数を呼び出す
+        saveTask(taskText);
+        // 入力フィールドをクリア
+        document.getElementById("plan").value = "";
+        document.getElementById("place").value= "";
+        document.getElementById("day").value= "";
+        document.getElementById("time_h").value= "";
+        document.getElementById("time_s").value= "";
+      }
+}
+
+function button_remove(){ 
+    localStorage.removeItem('All_Data');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function removetext(){
     const div = document.getElementById("text_area");
