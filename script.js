@@ -244,11 +244,7 @@ function dayclick(){
         year_month = String(year) + "-" + (month + 1);   
         console.log(year_month);
     }
-    // display(year_month);
-}
 
-function createpage(){
-    
 }
 
 var hour;
