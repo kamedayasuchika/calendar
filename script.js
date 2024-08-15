@@ -13,7 +13,6 @@ var taskText; //予定、場所、日付、時間
 var Storageday; //登録ボタンを押下した際の日付
 
 
-
 //画面が読み込まれた際に、読み込まれた処理
     window.onload = function(){
     //カレンダーのヘッダー部分の作成
@@ -236,7 +235,7 @@ function createTask(saveTasks_last) {
           "時間:　" + time_h + ":" + time_m;
     
         //全てのフォームに入力があった際に関数を呼び出す
-        if(plan && place && day && time_h && time_m){
+        if(plan && place && day && time_h && time_m && year_month == Storageday){
             // タスクを保存する関数を呼び出す
             saveTask(taskText , Storageday);
             // 入力フィールドをクリア
@@ -245,6 +244,10 @@ function createTask(saveTasks_last) {
             document.getElementById("day").value= "";
             document.getElementById("time_h").value= "";
             document.getElementById("time_m").value= "";
+          }else if(plan == "" || place == "" || day == "" || time_h == "" || time_m == "" ){
+            var result = window.confirm("予定を登録する際は、全て情報を入力してください。");
+          }else if(year_month != Storageday){
+            var result = window.confirm("予定を登録する際は、今月の情報を入力してください。");
           }
     }
     

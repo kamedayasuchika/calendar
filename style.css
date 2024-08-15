@@ -75,3 +75,7 @@ tr th:last-child,td:last-child{
     width: 8em;
     height: 2em;
 }
+
+ul{
+    list-style: none;
+}
