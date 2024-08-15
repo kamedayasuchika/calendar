@@ -7,7 +7,7 @@
     font-size: larger;
 }
 
-button{
+.all_area > button{
     width: 3em;
     height: 2em;
 }
@@ -53,11 +53,25 @@ tr th:last-child,td:last-child{
     table-layout: fixed;
 }
 
-
-
 #plantable td{
     background-color: white;
     color: black;
     width:calc(100% / 4)
 }
 
+.plan_area {
+    text-align: center;
+}
+
+#submit{
+    text-align: center;
+}
+
+#task_area{
+    text-align: center;
+}
+
+#display_task{
+    width: 8em;
+    height: 2em;
+}
