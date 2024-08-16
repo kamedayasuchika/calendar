@@ -28,8 +28,8 @@ var Storageday; //登録ボタンを押下した際の日付
     saveTasks.forEach(function (taskText) {
         // タスクを表示する関数を呼び出す
         createTask(taskText);
-      });
-     };
+    });
+    };
 
 //カレンダーの～年～月の部分を作成
     function Calendarheader(today){
@@ -64,37 +64,43 @@ var Storageday; //登録ボタンを押下した際の日付
         var startDayOfWeek = new Date(year, month, 1).getDay(); //月初の曜日を取得
         var monthOfEndDay = new Date(year, month + 1, 0).getDate(); //月末日を取得
         var countDay = 0; //日にち
-        const plus_seven = 7; //7日
         var countDay_plus_seven; //日にち+7日(23/30 ←　5週目表示用)
-        const lastWeek = 4; //最終週
         var textday; //　td内に表示されるテキスト
+        const lastWeek = 4; //最終週
+        const plus_seven = 7; //7日
+        const friday = 5;
+        const saturday = 6;
     
 
     const tbody = document.createElement("tbody"); ////tbody要素の作成
     tbody.id = "calendartbody";
-    for(let t = 0; t < 5; t++){
+    for(let weekcount = 0; weekcount < 5; weekcount++){
         const tbody_tr = document.createElement("tr"); //tr要素の作成
         for(let j = 0; j < week.length; j++){
             const tbody_td = document.createElement("td"); //td要素の作成
             tbody_td.classList.add("in_data");
-            if((t == 0 && j < startDayOfWeek) || (t == 4  && countDay == monthOfEndDay)){ //月初前、月末後に空白の枠作成
+            if((weekcount == 0 && j < startDayOfWeek) || (weekcount == lastWeek  && countDay == monthOfEndDay)){ //月初前、月末後に空白の枠作成
                 tbody_td.classList.replace("in_data","no_data");
                 textday = document.createTextNode("　"); //予定がない日は空白を入れる
-            }else if(t == 0 && startDayOfWeek == j){  //1週目の作成
+            }else if(weekcount == 0 && startDayOfWeek == j){  //1週目の作成
                 countDay++; //日付
                 textday = document.createTextNode(countDay); 
-            }else if(t < lastWeek){  //2~4週目の作成
+                holiday(month,countDay,weekcount);
+            }else if(weekcount < lastWeek){  //2~4週目の作成
                 countDay++; //日付
                 textday = document.createTextNode(countDay);
-            }else if(t == lastWeek && startDayOfWeek >= 5 && monthOfEndDay == "31" && countDay_plus_seven < monthOfEndDay){  //最終週、月初が金、土で始まり、月末が31日、日付+7日が月末未満
+            }else if(weekcount == lastWeek && startDayOfWeek >= friday && monthOfEndDay == "31" && countDay_plus_seven < monthOfEndDay){  //最終週、月初が金、土で始まり、月末が31日、日付+7日が月末未満
                 countDay++; //日付
                 textday = document.createTextNode(countDay + "/" + (countDay_plus_seven + 1));
-            }else if(t == lastWeek && startDayOfWeek == 6 && monthOfEndDay == "30" && countDay_plus_seven <= monthOfEndDay){ //最終週、月初が土で始まり、月末が30日、日付+7日が月末未満
+                holiday(month,countDay,weekcount);
+            }else if(weekcount == lastWeek && startDayOfWeek == saturday && monthOfEndDay == "30" && countDay_plus_seven <= monthOfEndDay){ //最終週、月初が土で始まり、月末が30日、日付+7日が月末未満
                 countDay++; //日付
                 textday = document.createTextNode(countDay + "/" + countDay_plus_seven);
-            }else if(t == lastWeek){ //最終週で、上2つ以外の場合
+                holiday(month,countDay,weekcount);
+            }else if(weekcount == lastWeek){ //最終週で、上2つ以外の場合
                 countDay++; //日付
                 textday = document.createTextNode(countDay);
+                holiday(month,countDay,weekcount);
             }
             tbody_td.appendChild(textday);
             tbody_tr.appendChild(tbody_td);
@@ -107,6 +113,10 @@ var Storageday; //登録ボタンを押下した際の日付
     }
 }
 
+function holiday(month,countDay,weekcount){
+    
+
+}
 
 //年、月のボタンが押されるたびに表示されているカレンダーを削除し、変更後の年、月で再度カレンダーを作成
 function removeCalendar(){
@@ -323,3 +333,15 @@ function createTask(saveTasks_last) {
             year_month = String(year) + "-" + month;   
         }
     }
+
+    async function getHolidaysOf(year) {
+        const url = `https://holidays-jp.github.io/api/v1/date.json?year=${year}`;
+        const response = await fetch(url);
+        const holidays = await response.json();
+        return holidays;
+      }
+      
+      (async () => {
+        const holidays2024 = await getHolidaysOf(2024);
+        console.log(holidays2024);
+      })();
