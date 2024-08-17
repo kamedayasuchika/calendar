@@ -28,8 +28,8 @@ var Storageday; //登録ボタンを押下した際の日付
     saveTasks.forEach(function (taskText) {
         // タスクを表示する関数を呼び出す
         createTask(taskText);
-    });
-    };
+      });
+     };
 
 //カレンダーの～年～月の部分を作成
     function Calendarheader(today){
@@ -64,43 +64,37 @@ var Storageday; //登録ボタンを押下した際の日付
         var startDayOfWeek = new Date(year, month, 1).getDay(); //月初の曜日を取得
         var monthOfEndDay = new Date(year, month + 1, 0).getDate(); //月末日を取得
         var countDay = 0; //日にち
-        var countDay_plus_seven; //日にち+7日(23/30 ←　5週目表示用)
-        var textday; //　td内に表示されるテキスト
-        const lastWeek = 4; //最終週
         const plus_seven = 7; //7日
-        const friday = 5;
-        const saturday = 6;
+        var countDay_plus_seven; //日にち+7日(23/30 ←　5週目表示用)
+        const lastWeek = 4; //最終週
+        var textday; //　td内に表示されるテキスト
     
 
     const tbody = document.createElement("tbody"); ////tbody要素の作成
     tbody.id = "calendartbody";
-    for(let weekcount = 0; weekcount < 5; weekcount++){
+    for(let t = 0; t < 5; t++){
         const tbody_tr = document.createElement("tr"); //tr要素の作成
         for(let j = 0; j < week.length; j++){
             const tbody_td = document.createElement("td"); //td要素の作成
             tbody_td.classList.add("in_data");
-            if((weekcount == 0 && j < startDayOfWeek) || (weekcount == lastWeek  && countDay == monthOfEndDay)){ //月初前、月末後に空白の枠作成
+            if((t == 0 && j < startDayOfWeek) || (t == 4  && countDay == monthOfEndDay)){ //月初前、月末後に空白の枠作成
                 tbody_td.classList.replace("in_data","no_data");
                 textday = document.createTextNode("　"); //予定がない日は空白を入れる
-            }else if(weekcount == 0 && startDayOfWeek == j){  //1週目の作成
+            }else if(t == 0 && startDayOfWeek == j){  //1週目の作成
                 countDay++; //日付
                 textday = document.createTextNode(countDay); 
-                holiday(month,countDay,weekcount);
-            }else if(weekcount < lastWeek){  //2~4週目の作成
+            }else if(t < lastWeek){  //2~4週目の作成
                 countDay++; //日付
                 textday = document.createTextNode(countDay);
-            }else if(weekcount == lastWeek && startDayOfWeek >= friday && monthOfEndDay == "31" && countDay_plus_seven < monthOfEndDay){  //最終週、月初が金、土で始まり、月末が31日、日付+7日が月末未満
+            }else if(t == lastWeek && startDayOfWeek >= 5 && monthOfEndDay == "31" && countDay_plus_seven < monthOfEndDay){  //最終週、月初が金、土で始まり、月末が31日、日付+7日が月末未満
                 countDay++; //日付
                 textday = document.createTextNode(countDay + "/" + (countDay_plus_seven + 1));
-                holiday(month,countDay,weekcount);
-            }else if(weekcount == lastWeek && startDayOfWeek == saturday && monthOfEndDay == "30" && countDay_plus_seven <= monthOfEndDay){ //最終週、月初が土で始まり、月末が30日、日付+7日が月末未満
+            }else if(t == lastWeek && startDayOfWeek == 6 && monthOfEndDay == "30" && countDay_plus_seven <= monthOfEndDay){ //最終週、月初が土で始まり、月末が30日、日付+7日が月末未満
                 countDay++; //日付
                 textday = document.createTextNode(countDay + "/" + countDay_plus_seven);
-                holiday(month,countDay,weekcount);
-            }else if(weekcount == lastWeek){ //最終週で、上2つ以外の場合
+            }else if(t == lastWeek){ //最終週で、上2つ以外の場合
                 countDay++; //日付
                 textday = document.createTextNode(countDay);
-                holiday(month,countDay,weekcount);
             }
             tbody_td.appendChild(textday);
             tbody_tr.appendChild(tbody_td);
@@ -113,10 +107,6 @@ var Storageday; //登録ボタンを押下した際の日付
     }
 }
 
-function holiday(month,countDay,weekcount){
-    
-
-}
 
 //年、月のボタンが押されるたびに表示されているカレンダーを削除し、変更後の年、月で再度カレンダーを作成
 function removeCalendar(){
@@ -263,23 +253,22 @@ function createTask(saveTasks_last) {
     
     //フォームに一番最後に入力された情報を表示する
     function display(){
-        //ローカルストレージを取得
-        const saveTasks = JSON.parse(localStorage.getItem(("tasks" + year_month)));
-        //取得した配列の一番最後値を取得
-        var saveTasks_last = saveTasks.slice(-1)[0];
-        if(saveTasks_last){
-            createTask(saveTasks_last);
+        if(taskText){
+            createTask(taskText);
         }
+        taskText = "";
     }
 
     //ローカルストレージに保存されている情報を全て削除
     function remove(){
-        var result = window.confirm("登録した予定が消えてしまいます！");
-        if(result){
-            localStorage.removeItem(("tasks" + year_month));
-            removelist();
+        if(JSON.parse(localStorage.getItem(("tasks" + year_month)))){
+            var result = window.confirm("登録した予定が消えてしまいます！");
+            if(result){
+                localStorage.removeItem(("tasks" + year_month));
+                removelist();
+            
         }
-        
+        }
     }
 
     function removelist(){
@@ -333,15 +322,3 @@ function createTask(saveTasks_last) {
             year_month = String(year) + "-" + month;   
         }
     }
-
-    async function getHolidaysOf(year) {
-        const url = `https://holidays-jp.github.io/api/v1/date.json?year=${year}`;
-        const response = await fetch(url);
-        const holidays = await response.json();
-        return holidays;
-      }
-      
-      (async () => {
-        const holidays2024 = await getHolidaysOf(2024);
-        console.log(holidays2024);
-      })();
