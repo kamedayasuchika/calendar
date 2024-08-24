@@ -322,3 +322,15 @@ function createTask(saveTasks_last) {
             year_month = String(year) + "-" + month;   
         }
     }
+
+    async function getHolidaysOf(year) {
+        const url = `https://holidays-jp.github.io/api/v1/date.json?year=${year}`;
+        const response = await fetch(url);
+        const holidays = await response.json();
+        return holidays;
+      }
+      
+      (async () => {
+        const holidays2024 = await getHolidaysOf(2024);
+        console.log(holidays2024);
+      })();
